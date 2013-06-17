@@ -9,12 +9,12 @@ import tornado.web
 import tornado.httpclient
 from tornado.options import define, options
 
+from sqlalchemy.orm import scoped_session, sessionmaker
+from models import *  # import the engine to bind
+
 import settings as app_settings
 from handlers import *
 
-define("port", default=8080, help="port d'écoute du serveur http", type=int)
-define("debug", default=False, help="activer le mode de débuggage", type=bool)
-define("self_url", default="http://localhost:8080", help="URL du service", type=str)
 where_am_i = os.path.dirname(__file__)
 
 class Application(tornado.web.Application):
@@ -23,16 +23,20 @@ class Application(tornado.web.Application):
             (r"/", HomeHandler)
             ]
         settings = {
-            "titre": u"MeublesUTC !",
+            "titre": u"Adopte un meuble",
             'cookie_secret': app_settings.cookie_secret,
             "template_path": os.path.join(where_am_i, "templates"),
             "debug": debug,
-            "sel_url": self_url
+            "self_url": self_url
             }
         tornado.web.Application.__init__(self, handlers, **settings)
+        # Have one global connection.
+        self.db = scoped_session(sessionmaker(bind=engine))
+
+def run(debug=False, self_url='localhost:8080', port=8080):
+    http_server = tornado.httpserver.HTTPServer(Application(debug, self_url))
+    http_server.listen(port)
+    tornado.ioloop.IOLoop.instance().start()
 
 if __name__ == "__main__":
-    tornado.options.parse_command_line()
-    http_server = tornado.httpserver.HTTPServer(Application(options.debug, options.self_url))
-    http_server.listen(options.port)
-    tornado.ioloop.IOLoop.instance().start()
+    run()
