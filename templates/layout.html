@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title>{{ escape(handler.settings["titre"]) }}</title>
+  </head>
+  <body>
+    {% block body %}{% end %}
+    <script type="text/javascript">
+      {% block script %}{% end %}
+    </script>
+  </body>
+</html>
