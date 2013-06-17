@@ -12,10 +12,11 @@ Lancement
 ---------
 
 ```
-python server.py
+./fexchange
 ```
 
-options de la ligne de commande
-
- * --debug=True pour activer le mode debug de tornado (rechargement du serveur dès que les fichiers source sont modifiés)
- * --port pour modifier le port sur lequel l'application écoute les requêtes
+Il est possible de configurer le serveur grâce à l'option --do
+Voici les actions sont disponibles pour le moment
+ * configure : Crée le fichier de configuration settings.py
+ * create_tables : crée les tables à partir des modèles
+ * drop_tables : supprime les tables de la base
