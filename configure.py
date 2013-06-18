@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 
 from os import urandom
+from hashlib import sha256
 import os.path
 
 modele = """#!/usr/bin/env python
@@ -38,10 +39,15 @@ def interactive_config():
     password = ask('Mot de passe')
     location = ask('Emplacement du serveur', 'localhost')
     base = ask('Nom de la base de données')
-    secret = urandom(24)
+    secret = sha256(urandom(24)).hexdigest()
+
+    try:
+        format = open('settings.dist.py', 'r').read()
+    except Exception as e:
+        format = modele
 
     with open('settings.py', 'w') as settings:
-        settings.write(modele.format(secret=secret,
+        settings.write(format.format(secret=secret,
                                      type=type,
                                      user=user,
                                      password=password,

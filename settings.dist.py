@@ -1,3 +1,7 @@
 #!/usr/bin/env python
+# -*- coding:utf-8 -*-
 
-cookie_secret = "a_long_super_secret_key"
+#Secret key for tornado secure cookies
+cookie_secret = "{secret}"
+#Database connection string
+db_connection = "{type}://{user}:{password}@{location}/{base}"
