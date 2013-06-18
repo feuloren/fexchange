@@ -1,0 +1,14 @@
+{% extends "../layout.html" %}
+
+{% block body %}
+<div>
+{% for don in dons %}
+  <div>
+    <h1>{{ don.nom }} <small>dans {{ don.categorie.nom }}</small></h1>
+    <p>
+      {{ don.description }}
+    </p>
+  </div>
+{% end %}
+</div>
+{% end %}

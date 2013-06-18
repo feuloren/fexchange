@@ -20,7 +20,8 @@ where_am_i = os.path.dirname(__file__)
 class Application(tornado.web.Application):
     def __init__(self, debug, self_url):
         handlers = [
-            (r"/", HomeHandler)
+            (r"/", HomeHandler),
+            (r"/dons", DonsHandler)
             ]
         settings = {
             "titre": u"Adopte un meuble",

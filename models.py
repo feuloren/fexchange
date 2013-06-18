@@ -40,7 +40,7 @@ class Offre(Base):
     description = Column(Text)
     date_depart = Column(DateTime, nullable=False)
     date_conclusion = Column(DateTime)
-    data_annule = Column(DateTime)
+    date_annule = Column(DateTime)
 
 offres_table = Offre.__table__
 
