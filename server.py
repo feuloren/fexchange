@@ -8,26 +8,32 @@ import tornado.ioloop
 import tornado.web
 import tornado.httpclient
 from tornado.options import define, options
+from tornado.web import URLSpec as Spec
 
 from sqlalchemy.orm import scoped_session, sessionmaker
 from models import *  # import the engine to bind
 
 import settings as app_settings
 from handlers import *
+import modules as uimodules
 
 where_am_i = os.path.dirname(__file__)
 
 class Application(tornado.web.Application):
     def __init__(self, debug, self_url):
         handlers = [
-            (r"/", HomeHandler),
-            (r"/dons", DonsHandler)
+            Spec(r"/", HomeHandler),
+            Spec(r"/recherche(?:/(.*))?", RechercheHandler),
+            Spec(r"/vente/new", NewVenteHandler, name='nouvelle_vente'),
             ]
         settings = {
             "titre": u"Adopte un meuble",
             'cookie_secret': app_settings.cookie_secret,
             "template_path": os.path.join(where_am_i, "templates"),
             "debug": debug,
+            "static_path": app_settings.static_path,
+            "static_host": app_settings.static_host,
+            "ui_modules": uimodules,
             "self_url": self_url
             }
         tornado.web.Application.__init__(self, handlers, **settings)

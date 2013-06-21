@@ -1,0 +1,11 @@
+<div class="control-group">
+  {% raw field.label(class_='control-label') %}
+  <div class="controls">
+    {% raw field(**kwargs) %}
+    {% if field.errors %}
+      {% for error in field.errors %}
+        {{ error }}<br/>
+      {% end %}
+    {% end %}
+  </div>
+</div>
