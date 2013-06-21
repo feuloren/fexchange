@@ -9,7 +9,8 @@ def after_install(options, home_dir):
     if not os.path.exists(etc):
         os.makedirs(etc)
     subprocess.call([os.path.join(home_dir, 'bin', 'pip'),
-                    'install', 'tornado', 'SQLAlchemy', 'MySQL-python'])
+                    'install', 'tornado', 'SQLAlchemy', 'WTForms',
+                    'WTForms-Alchemy', 'MySQL-python', 'Markdown'])
 
 def adjust_options(options, args):
     args.append('virtualenv')

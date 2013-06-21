@@ -6,7 +6,7 @@ Pour revendre, donner, prêter et trouver des meubles à Compiègne.
 Dépendances
 -----------
 
-Python2, Tornado, SqlAlchemy, Mysql
+Python2, Tornado, SqlAlchemy, Mysql et WTForms
 
 Installation
 ------------
