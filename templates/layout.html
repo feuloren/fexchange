@@ -2,10 +2,25 @@
 <html lang="fr">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <LINK rel="stylesheet" type="text/css" href="{{ static_url('compass/stylesheets/style.css') }}">
+  <link href="{{ static_url('compass/stylesheets/screen.css') }}" media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="{{ static_url('compass/stylesheets/print.css') }}" media="print" rel="stylesheet" type="text/css" />
+  <!--[if IE]>
+      <link href="{{ static_url('compass/stylesheets/ie.css') }}" media="screen, projection" rel="stylesheet" type="text/css" />
+  <![endif]-->
       <title>{{ escape(handler.settings["titre"]) }}</title>
   </head>
   <body>
+    <div id="topfixed">
+      <div class="userinfo">
+        Matthieu Grillere
+      </div>
+      <img src="{{ static_url('images/haku.jpg') }}"/>
+      <a href="#"> Connection </a>
+    </div>
+    <div id="corp">
     {% block body %}{% end %}
+    </div>
     <script type="text/javascript">
       {% block script %}{% end %}
     </script>

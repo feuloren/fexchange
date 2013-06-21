@@ -30,6 +30,7 @@ class Application(tornado.web.Application):
             "titre": u"Adopte un meuble",
             'cookie_secret': app_settings.cookie_secret,
             "template_path": os.path.join(where_am_i, "templates"),
+	    "static_path" : os.path.join(where_am_i, "static"),
             "debug": debug,
             "static_path": app_settings.static_path,
             "static_host": app_settings.static_host,
