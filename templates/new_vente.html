@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<form class="form-horizontal" method="POST" action="{{ reverse_url('nouvelle_vente') }}">
+  {% module FormField(form.nom) %}
+  {% module FormField(form.categorie_id) %}
+  {% module FormField(form.prix) %}
+  {% module FormField(form.description) %}
+  <input type="submit" value="Enregistrer" />
+</form>
+
+{% end %}
