@@ -2,9 +2,10 @@
 # -*- coding:utf-8 -*-
 
 from sqlalchemy import create_engine
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, ForeignKey, Enum
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, ForeignKey, Enum, Numeric, Date
 from sqlalchemy.orm import relationship, backref, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.hybrid import hybrid_property
 
 import settings as app_settings
 
@@ -22,6 +23,10 @@ class Utilisateur(Base):
     email = Column(String(100), nullable=False)
     mdp = Column(String(128), nullable=False)
     offres = relationship("Offre", order_by="Offre.id", backref="offre")
+
+    @hybrid_property
+    def nom_complet(self):
+        return self.prenom + ' ' + self.nom
 
     def __repr__(self):
         return "<User('%s')>" % (self.login)
@@ -41,6 +46,42 @@ class Offre(Base):
     date_depart = Column(DateTime, nullable=False)
     date_conclusion = Column(DateTime)
     date_annule = Column(DateTime)
+
+    #date_achat = Column(Date)
+    #date_disponibilite = Column(Date, nullable=False)
+    #etat = Column(Enum(u'Neuf', u'Comme neuf', u'Bon état', u'Usé', u'Dégradé'), nullable=False)
+    
+
+    __mapper_args__ = {
+        'polymorphic_identity':'offres',
+        'polymorphic_on':type
+        }
+
+class Don(Offre):
+    __tablename__ = 'offres'
+
+    __mapper_args__ = {
+        'polymorphic_identity':'don',
+        }    
+
+class Vente(Offre):
+    __tablename__ = 'ventes'
+    id = Column(Integer, ForeignKey('offres.id'), primary_key=True)
+    prix = Column(Numeric(6, 2), nullable=True)
+
+    __mapper_args__ = {
+        'polymorphic_identity':'vente',
+        }
+
+class Pret(Offre):
+    __tablename__ = 'prets'
+    id = Column(Integer, ForeignKey('offres.id'), primary_key=True)
+    date_disponibilite = Column(Date)
+    date_retour = Column(Date)
+
+    __mapper_args__ = {
+        'polymorphic_identity':'pret',
+        }
 
 offres_table = Offre.__table__
 
