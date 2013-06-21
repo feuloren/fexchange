@@ -48,8 +48,8 @@
 #corp {
     height: 1000px;
     margin-top : 40px;
-    margin-right: 100px;
-    margin-left: 100px;
+    width : 980px;
+    margin : auto;
     padding: 15px 30px 15px 30px;
     background-color: darken($base-color, 5%);
 }
