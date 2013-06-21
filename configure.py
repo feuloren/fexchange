@@ -39,6 +39,8 @@ def interactive_config():
     password = ask('Mot de passe')
     location = ask('Emplacement du serveur', 'localhost')
     base = ask('Nom de la base de données')
+    host = ask('Nom de domaine pour accèder fichiers statiques')
+    spath = ask('Dossier où sont stockés les fichiers statiques (debug seulement)')
     secret = sha256(urandom(24)).hexdigest()
 
     try:
@@ -52,5 +54,7 @@ def interactive_config():
                                      user=user,
                                      password=password,
                                      location=location,
-                                     base=base))
+                                     base=base,
+                                     static_path=spath,
+                                     static_host=host))
 

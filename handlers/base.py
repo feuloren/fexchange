@@ -15,7 +15,7 @@ class BaseHandler(tornado.web.RequestHandler):
     def static_url(self, filename):
         """On stocke nos fichiers statiques sous un autre domaine.
         et on n'a pas besoin du versionnage des fichiers"""
-        self.require_setting("static_url", "static_host")
+        self.require_setting("static_path", "static_host")
         
         if self.application.settings['debug']:
             """en mode debug on sert le fichiers en local"""
