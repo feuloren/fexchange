@@ -27,7 +27,8 @@ class VenteForm(BaseForm):
 
     def customize(self):
         self.set_label("nom", u"Nom de l'objet")
-        #self.set_label("date_disponibilite", u"Date de disponibilité de l'objet")
+        self.set_label("date_disponibilite", u"Date de disponibilité de l'objet")
+        self.set_label("date_achat", u"Date d'achat")
         self.set_label("prix", u"Prix")
-        #self.set_label("etat", u"État")
+        self.set_label("etat", u"État")
 
