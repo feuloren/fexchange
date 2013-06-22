@@ -9,7 +9,7 @@ from sqlalchemy.ext.hybrid import hybrid_property
 
 import settings as app_settings
 
-engine = create_engine(app_settings.db_connection, echo=False)
+engine = create_engine(app_settings.db_connection+'?charset=utf8&use_unicode=1', echo=False)
 #Session = sessionmaker(bind=engine)
 #session = Session()
 Base = declarative_base()
