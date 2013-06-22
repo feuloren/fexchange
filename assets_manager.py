@@ -26,7 +26,7 @@ def compile(source, target, compress=False):
     if not os.path.isdir(source):
         raise PathException(source)
     if not os.path.isdir(target):
-        if not os.path.exists(target):
+        if os.path.exists(target):
             raise PathException('Not a directory : '+target)
         else:
             try:
@@ -46,6 +46,9 @@ def compile(source, target, compress=False):
     os.path.walk(source, walker, None)
             
 class AssetsHandler(FileSystemEventHandler):
+    """Handler pour les évènements watchdog
+    Dans notre cas on ne intéresse uniquement aux modifications de fichiers
+    """
     def __init__(self, source, target, compress):
         super(AssetsHandler, self).__init__()
         self.source = source
@@ -67,7 +70,10 @@ def watch(source, target, compress=False):
     """
     if not os.path.isdir(source):
         raise PathException(source)
-    
+
+    # On compile les fichiers une première fois
+    compile(os.path.abspath(source), os.path.abspath(target), compress)
+
     observer = Observer()
     handler = AssetsHandler(source, target, compress)
     observer.schedule(handler, source, True)
