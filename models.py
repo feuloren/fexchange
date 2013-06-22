@@ -47,10 +47,9 @@ class Offre(Base):
     date_conclusion = Column(DateTime)
     date_annule = Column(DateTime)
 
-    #date_achat = Column(Date)
-    #date_disponibilite = Column(Date, nullable=False)
-    #etat = Column(Enum(u'Neuf', u'Comme neuf', u'Bon état', u'Usé', u'Dégradé'), nullable=False)
-    
+    date_achat = Column(Date)
+    date_disponibilite = Column(Date, nullable=False)
+    etat = Column(Enum(u'Neuf', u'Comme neuf', u'Bon état', u'Usé', u'Dégradé'), nullable=False)
 
     __mapper_args__ = {
         'polymorphic_identity':'offres',
@@ -62,7 +61,7 @@ class Don(Offre):
 
     __mapper_args__ = {
         'polymorphic_identity':'don',
-        }    
+        }
 
 class Vente(Offre):
     __tablename__ = 'ventes'
@@ -76,20 +75,23 @@ class Vente(Offre):
 class Pret(Offre):
     __tablename__ = 'prets'
     id = Column(Integer, ForeignKey('offres.id'), primary_key=True)
-    date_disponibilite = Column(Date)
     date_retour = Column(Date)
+    duree = Column(Integer)
 
     __mapper_args__ = {
         'polymorphic_identity':'pret',
         }
 
 offres_table = Offre.__table__
+dons_table = Don.__table__
+ventes_table = Vente.__table__
+prets_table = Pret.__table__
 
 class Categorie(Base):
     __tablename__ = 'categories'
     id = Column(Integer, primary_key=True)
-    nom = Column(String(20), nullable=True)
-    description = Column(String(140), nullable=True)
+    nom = Column(String(20), nullable=False)
+    description = Column(String(140))
 
 categories_table = Categorie.__table__
 
