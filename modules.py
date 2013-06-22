@@ -5,6 +5,7 @@ import markdown
 
 class FormField(UIModule):
     def render(self, field, **kwargs):
+        # note : on peut vérifier si le champ est requis avec field.flags.required
         return self.render_string('modules/formfield.html', field=field, kwargs=kwargs)
 
 class Markdown(UIModule):
