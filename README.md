@@ -34,5 +34,10 @@ Lancement
 Il est possible de configurer le serveur grâce à l'option --do
 Voici les actions disponibles pour le moment
  * configure : Crée le fichier de configuration settings.py
- * create_tables : crée les tables à partir des modèles
- * drop_tables : supprime les tables de la base
+ * create_tables : Crée les tables à partir des modèles
+ * drop_tables : Supprime les tables de la base
+ * compile_assets : Compile les fichiers scss
+
+L'option -d ou --debug passe l'application en mode debug :
+ * Le serveur est relancé si un fichier python est modifié
+ * Les fichiers scss sont recompilés quand ils sont modifiés
