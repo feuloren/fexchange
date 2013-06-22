@@ -13,6 +13,15 @@ parser.add_option('-D', '--do', dest='action', nargs=1, action='store', default=
 
 options, args = parser.parse_args()
 
+assets_conf_compile = dict(
+    source = 'assets/styles',
+    target = 'static/styles',
+    compress = False)
+assets_conf_watch = dict(
+    source = 'assets/styles',
+    target = 'static/styles',
+    compress = False)
+
 if options.action:
     action = options.action
     if action == 'create_tables':
@@ -31,10 +40,19 @@ if options.action:
         print "= Configuration interactive ="
         interactive_config()
 
+    elif action == 'compile_assets':
+        print "= Compilation des ressources ="
+        from assets_manager import compile
+        compile(**assets_conf_compile)
+
     else:
         print "Action invalide"
     
 else:
     import server
     print "= Lancement du serveur ="
+    if options.debug:
+        print "- Mode Débug -"
+        from assets_manager import watch
+        watch(**assets_conf_watch)
     server.run(options.debug, options.url, options.port)
