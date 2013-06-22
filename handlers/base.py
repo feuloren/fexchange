@@ -19,7 +19,7 @@ class BaseHandler(tornado.web.RequestHandler):
         
         if self.application.settings['debug']:
             """en mode debug on sert le fichiers en local"""
-            return self.application.settings["static_path"] + filename
+            return '/static/' + filename
         else:
             """en mode production il faut qu'ils soit publiés"""
             return self.application.settings["static_host"] + filename

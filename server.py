@@ -31,8 +31,8 @@ class Application(tornado.web.Application):
             'cookie_secret': app_settings.cookie_secret,
             "template_path": os.path.join(where_am_i, "templates"),
             "debug": debug,
-            "static_path": app_settings.static_path,
-            "static_host": os.path.join(where_am_i, app_settings.static_host),
+            "static_path": os.path.join(where_am_i, app_settings.static_path),
+            "static_host": app_settings.static_host,
             "ui_modules": uimodules,
             "self_url": self_url
             }
