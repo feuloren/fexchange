@@ -5,7 +5,7 @@
   position: fixed;
   top: 0px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-  background-color: #ff9f40;
+  background-color: #e4843f;
 }
 /* line 13, ../sass/style.scss */
 #topfixed img {
@@ -60,5 +60,5 @@
   width: 980px;
   margin: auto;
   padding: 15px 30px 15px 30px;
-  background-color: #f37800;
+  background-color: #bc5e1b;
 }
