@@ -6,7 +6,7 @@ Pour revendre, donner, prêter et trouver des meubles à Compiègne.
 Dépendances
 -----------
 
-Python2, Tornado, SqlAlchemy, Mysql, WTForms et pyScss
+Python2, Tornado, SqlAlchemy, Mysql, WTForms, pyScss
 
 Installation
 ------------
@@ -27,6 +27,11 @@ source activate
 Pour en sortir
 ```
 deactivate
+```
+
+Il peut être utile de mettre à jour le virtualenv après avoir fait un pull
+```
+python update_virtualenv.py
 ```
 
 Lancement
