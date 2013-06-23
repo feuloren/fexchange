@@ -3,11 +3,9 @@
 
 import sys
 import optparse
-from configure import interactive_config
+from configure import interactive_config, update
 
 parser = optparse.OptionParser()
-parser.add_option('-p', '--port', dest='port', type='int', default=8080, action='store', help=u'Port sur lequel on écoute les connections')
-parser.add_option('-u', '--url', dest='url', default='http://localhost:8080', action='store', help=u'URL d\'accès à l\'application')
 parser.add_option('-d', '--debug', dest='debug', default=False, action='store_true', help=u'Lancement en mode debug')
 parser.add_option('-D', '--do', dest='action', nargs=1, action='store', default=False, help=u'Action à effectuer (pour le déploiement et la maintenance)')
 
@@ -21,6 +19,18 @@ assets_conf_watch = dict(
     source = 'assets/styles',
     target = 'static/styles',
     compress = False)
+
+try:
+    import settings
+except ImportError:
+    print "- Configuration de l'application -"
+    interactive_config()
+    import settings
+
+if not settings.up_to_date():
+    print "- Mise à jour du fichier de paramètres -"
+    update()
+    reload(settings)
 
 if options.action:
     action = options.action
@@ -55,4 +65,4 @@ else:
         print "- Mode Débug -"
         from assets_manager import watch
         watch(**assets_conf_watch)
-    server.run(options.debug, options.url, options.port)
+    server.run(options.debug)

@@ -2,18 +2,26 @@
 # -*- coding:utf-8 -*-
 
 from os import urandom
-from hashlib import sha256
+from hashlib import sha256, md5
 import os.path
 
-modele = """#!/usr/bin/env python
+modele = """
+#!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
-cookie_secret = "{secret}"
-db_connection = "{type}://{user}:{password}@{location}/{base}"
+settings_model_hash = "{hash}"
+def up_to_date():
+    from hashlib import md5
+    content = open('settings_dist.py', 'r').read()
+    return settings_model_hash == md5(content).hexdigest()
 
 """
 
 def ask(message, default=None):
+    """Demande une valeur à l'utilisateur
+    Il est possible de donner une valeur par défaut qui sera
+    indiquée à l'utilisateur et renvoyée si il entre une chaine vide
+    """
     res = raw_input(message + (' ['+default+']' if default else '') + ' : ')
     if res:
         return res
@@ -25,36 +33,60 @@ def ask(message, default=None):
                 res = raw_input(message + ' : ')
             return res
 
+def yes_or_no(message):
+    res = 'a'
+    while not(res in ('o', 'n')):
+        res = raw_input(message + ' [o/n] : ')
+    return res == 'o'
+
+def get_value(param):
+    if param.has_key('gen'):
+        return param['gen']()
+    else:
+        if not param.has_key('desc'):
+            raise Exception("Le paramètre %s n'a pas de description !" % param['name'])
+        default = param.get('default', None)
+        return ask(param['desc'], default)
+
 def interactive_config():
     if (os.path.isfile('settings.py')):
-        res = 'a'
-        while not(res in ('o', 'n')):
-            res = raw_input('Le fichier de configuration existe déjà, écraser cette configuration ? [o/n] : ')
-        if res == 'n':
+        import settings
+        if not settings.up_to_date():
+            if yes_or_no('Le fichier de paramètre à été modifié, mettre à jour ?'):
+                return update()
+        if not yes_or_no('Le fichier de configuration existe déjà, écraser cette configuration ?'):
             print "Abandon"
             return
 
-    type = ask('Type de la base de données', 'mysql')
-    user = ask('Nom de l\'utilisateur')
-    password = ask('Mot de passe')
-    location = ask('Emplacement du serveur', 'localhost')
-    base = ask('Nom de la base de données')
-    host = ask('Nom de domaine pour accèder fichiers statiques')
-    spath = ask('Dossier où sont stockés les fichiers statiques (debug seulement)')
-    secret = sha256(urandom(24)).hexdigest()
-
-    try:
-        format = open('settings.dist.py', 'r').read()
-    except Exception as e:
-        format = modele
+    params = ''
+    import settings_dist
+    for param in settings_dist.liste:
+        if not param.has_key('name'):
+            raise Exception("Le paramètre " + str(param) + " n'a pas de nom !")
+        value = get_value(param)
+        params += '{name} = "{value}"\n'.format(name=param['name'],
+                                              value=value)
 
     with open('settings.py', 'w') as settings:
-        settings.write(format.format(secret=secret,
-                                     type=type,
-                                     user=user,
-                                     password=password,
-                                     location=location,
-                                     base=base,
-                                     static_path=spath,
-                                     static_host=host))
+        # On sauvegarde le hash md5 du fichier de config des paramètres
+        # puis les paramètres
+        hash = md5(open('settings_dist.py', 'r').read()).hexdigest()
+        settings.write(modele.format(hash=hash))
+        settings.write(params)
 
+
+def update():
+    params = ''
+    import settings_dist
+    import settings
+    for param in settings_dist.liste:
+        if not param.has_key('name'):
+            raise Exception("Le paramètre " + str(param) + " n'a pas de nom !")
+        if hasattr(settings, param['name']):
+            continue
+        value = get_value(param)
+        params += '{name} = "{value}"\n'.format(name=param['name'],
+                                                value=value)
+
+    with open('settings.py', 'a') as settings_f:
+        settings_f.write(params)

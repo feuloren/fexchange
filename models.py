@@ -6,10 +6,17 @@ from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, Foreign
 from sqlalchemy.orm import relationship, backref, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.engine.url import URL
 
 import settings as app_settings
 
-engine = create_engine(app_settings.db_connection+'?charset=utf8&use_unicode=1', echo=False)
+url = URL('mysql', username=app_settings.db_user,
+          password=app_settings.db_pass,
+          host=app_settings.db_host,
+          database=app_settings.db_name,
+          query={'charset':'utf8',
+                 'use_unicode':'1'})
+engine = create_engine(url, echo=False)
 #Session = sessionmaker(bind=engine)
 #session = Session()
 Base = declarative_base()

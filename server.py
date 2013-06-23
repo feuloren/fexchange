@@ -20,7 +20,7 @@ import modules as uimodules
 where_am_i = os.path.dirname(__file__)
 
 class Application(tornado.web.Application):
-    def __init__(self, debug, self_url):
+    def __init__(self, debug):
         handlers = [
             Spec(r"/", HomeHandler),
             Spec(r"/recherche(?:/(.*))?", RechercheHandler),
@@ -30,19 +30,20 @@ class Application(tornado.web.Application):
             "titre": u"Adopte un meuble",
             'cookie_secret': app_settings.cookie_secret,
             "template_path": os.path.join(where_am_i, "templates"),
+            "static_path": os.path.join(where_am_i, "static"),
             "debug": debug,
-            "static_path": os.path.join(where_am_i, app_settings.static_path),
-            "static_host": app_settings.static_host,
+            "static_url": app_settings.static_url,
             "ui_modules": uimodules,
-            "self_url": self_url
+            "service_url": app_settings.service_url,
+            "cas_url": app_settings.cas_url,
             }
         tornado.web.Application.__init__(self, handlers, **settings)
         # Have one global connection.
         self.db = scoped_session(sessionmaker(bind=engine))
 
-def run(debug=False, self_url='localhost:8080', port=8080):
-    http_server = tornado.httpserver.HTTPServer(Application(debug, self_url))
-    http_server.listen(port)
+def run(debug=False, port=8080):
+    http_server = tornado.httpserver.HTTPServer(Application(debug))
+    http_server.listen(int(app_settings.port))
     tornado.ioloop.IOLoop.instance().start()
 
 if __name__ == "__main__":
