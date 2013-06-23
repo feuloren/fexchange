@@ -2,7 +2,6 @@
 
 import tornado.web
 from .base import BaseHandler
-from .cas import CasHandler
 
 class LoginHandler(BaseHandler):
     def get(self):
