@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 
 import sys
+import os
 import optparse
 from configure import interactive_config, update
 
@@ -19,6 +20,15 @@ assets_conf_watch = dict(
     source = 'assets/styles',
     target = 'static/styles',
     compress = False)
+
+try:
+    os.environ['VIRTUAL_ENV']
+except KeyError:
+    print """############
+## Attention
+## Vous n'êtes pas dans le virtualenv,
+## référez vous au fichier README.md pour plus d'informations
+############"""
 
 try:
     import settings
