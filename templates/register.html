@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<form method="POST" action="{{ reverse_url('register') }}">
+  {% module FormField(form.prenom) %}
+  {% module FormField(form.nom) %}
+  {% module FormField(form.email) %}
+  {% module FormField(form.mdp) %}
+  <input type="submit" value="S'enregistrer" />
+</form>
+
+{% end %}

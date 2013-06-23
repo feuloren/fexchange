@@ -30,7 +30,7 @@ class Application(tornado.web.Application):
             Spec(r"/auth/cas", CasHandler, name='cas_auth'),
             Spec(r"/auth/cas/register", CasRegisterHandler, name='cas_register'),
             Spec(r"/auth/classic", PasswordAuthHandler),
-            Spec(r"/auth/register", RegisterHandler),
+            Spec(r"/auth/register", RegisterHandler, name='register'),
             ]
         settings = {
             "titre": u"Adopte un meuble",
