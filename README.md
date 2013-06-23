@@ -14,9 +14,14 @@ Installation
 Vous pouvez utilisez le script bootstrap_fexchange.py pour créer un virtualenv et installer les librairies python nécessaires.
 Sous ubuntu il faut au préalable installer python-virtualenv et libmysqlclient-dev
 
+Pour créer le virtualenv
+```
+python bootstrap_fexchange.py
+```
+
 Pour activer le virtualenv
 ```
-source virtualenv/bin/activate
+source activate
 ```
 
 Pour en sortir
