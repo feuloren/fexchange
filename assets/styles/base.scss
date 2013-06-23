@@ -1,1 +1,3 @@
-$base-color : #D2691E;
+$base-color : #02991E;
+$base-clair : lighten($base-color, 10%);
+$base-sombre : darken($base-color, 5%);
