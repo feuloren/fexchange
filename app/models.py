@@ -112,17 +112,6 @@ class Photo(Base):
 
 photos_table = Photo.__table__
 
-class Message(Base):
-    __tablename__ = 'messages'
-    id = Column(Integer, primary_key=True)
-    expediteur_id = Column(Integer, ForeignKey('utilisateurs.id'), nullable=False)
-    expediteur = relationship("Utilisateur", foreign_keys=[expediteur_id])
-    destinataire_id = Column(Integer, ForeignKey('utilisateurs.id'), nullable=False)
-    destinataire = relationship("Utilisateur", foreign_keys=[destinataire_id])
-    contenu = Column(Text)
-    date_envoi = Column(DateTime, nullable=False)
-    date_lecture = Column(DateTime)
-
 metadata = Base.metadata
 
 def create_all():
