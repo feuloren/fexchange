@@ -24,11 +24,11 @@ Base = declarative_base()
 class Utilisateur(Base):
     __tablename__ = 'utilisateurs'
     id = Column(Integer, primary_key=True)
-    login = Column(String(10), nullable=False)
+    login = Column(String(10), nullable=True)
     prenom = Column(String(30), nullable=False)
     nom = Column(String(30), nullable=False)
     email = Column(String(100), nullable=False)
-    mdp = Column(String(128), nullable=False)
+    mdp = Column(String(128), nullable=False) #sha512
     offres = relationship("Offre", order_by="Offre.id", backref="offre")
 
     @hybrid_property

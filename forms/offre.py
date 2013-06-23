@@ -5,14 +5,6 @@ from .base import BaseForm
 from wtforms_alchemy import ModelFormField
 from wtforms.fields import IntegerField, SelectField
 
-class UtilisateurForm(BaseForm):
-    class Meta:
-        model = Utilisateur
-
-class CategorieForm(BaseForm):
-    class Meta:
-        model = Categorie
-
 class OffreForm(BaseForm):
     class Meta:
         model = Offre

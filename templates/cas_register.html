@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<form method="POST" action="{{ reverse_url('cas_register') }}">
+  {% module FormField(form.prenom) %}
+  {% module FormField(form.nom) %}
+  {% module FormField(form.email) %}
+  <input type="submit" value="S'enregistrer" />
+</form>
+
+{% end %}

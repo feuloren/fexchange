@@ -12,11 +12,15 @@
   </head>
   <body>
     <div id="topfixed">
+      {% if handler.current_user %}
       <div class="userinfo">
-        Matthieu Grillere
+        {{ handler.current_user.nom_complet }}
       </div>
       <img src="{{ static_url('images/haku.jpg') }}"/>
-      <a href="#"> Connection </a>
+      <a href="{{ reverse_url('logout') }}"> Déconnection </a>
+      {% else %}
+      <a href="{{ reverse_url('login') }}"> Connection </a>
+      {% end %}
     </div>
     <div id="corp">
     {% block body %}{% end %}
