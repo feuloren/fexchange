@@ -9,16 +9,22 @@ from re import search
 modele = """#!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
+from .configure import locate
+
 settings_model_hash = "{hash}"
 def up_to_date():
     from hashlib import md5
-    content = open('settings_dist.py', 'r').read()
+    content = open(locate('settings_dist.py'), 'r').read()
     return settings_model_hash == md5(content).hexdigest()
 
 """
 
+where_am_i = os.path.abspath(os.path.dirname(__file__))
+def locate(name):
+    return os.path.join(where_am_i, name)
+
 def calculate_hash():
-    return md5(open('settings_dist.py', 'r').read()).hexdigest()
+    return md5(open(locate('settings_dist.py'), 'r').read()).hexdigest()
 
 def ask(message, default=None):
     """Demande une valeur à l'utilisateur
@@ -52,7 +58,7 @@ def get_value(param):
         return ask(param['desc'], default)
 
 def interactive_config():
-    if (os.path.isfile('settings.py')):
+    if os.path.isfile(locate('settings.py')):
         import settings
         if not settings.up_to_date():
             if yes_or_no('Le fichier de paramètre à été modifié, mettre à jour ?'):
@@ -70,7 +76,7 @@ def interactive_config():
         params += '{name} = "{value}"\n'.format(name=param['name'],
                                               value=value)
 
-    with open('settings.py', 'w') as settings:
+    with open(locate('settings.py'), 'w') as settings:
         # On sauvegarde le hash md5 du fichier de config des paramètres
         # puis les paramètres
         settings.write(modele.format(hash=calculate_hash()))
@@ -90,9 +96,9 @@ def update():
         params += '{name} = "{value}"\n'.format(name=param['name'],
                                                 value=value)
     
-    content = open('settings.py', 'r').read()
+    content = open(locate('settings.py'), 'r').read()
     old_hash = search(r'settings_model_hash = "(.+)"', content).group(1)
     content = content.replace(old_hash, calculate_hash())
-    with open('settings.py', 'w') as settings_f:
+    with open(locate('settings.py'), 'w') as settings_f:
         settings_f.write(content)
         settings_f.write(params)

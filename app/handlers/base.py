@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import tornado.web
-from models import Utilisateur
+from ..models import Utilisateur
 
 class BaseHandler(tornado.web.RequestHandler):
     @property

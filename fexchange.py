@@ -4,7 +4,7 @@
 import sys
 import os
 import optparse
-from configure import interactive_config, update
+from app.configure import interactive_config, update
 
 parser = optparse.OptionParser()
 parser.add_option('-d', '--debug', dest='debug', default=False, action='store_true', help=u'Lancement en mode debug')
@@ -31,27 +31,27 @@ except KeyError:
 ############"""
 
 try:
-    import settings
+    import app.settings
 except ImportError:
     print "- Configuration de l'application -"
     interactive_config()
-    import settings
+    import app.settings
 
-if not settings.up_to_date():
+if not app.settings.up_to_date():
     print "- Mise à jour du fichier de paramètres -"
     update()
-    reload(settings)
+    reload(app.settings)
 
 if options.action:
     action = options.action
     if action == 'create_tables':
-        import models
+        from app import models
         print "= Création des tables ="
         models.metadata.create_all(models.engine)
         print "= Succès "
 
     elif action == 'drop_tables':
-        import models
+        from app import models
         print "= Suppression des tables ="
         models.metadata.drop_all(models.engine)
         print "= Succès ="
@@ -62,17 +62,17 @@ if options.action:
 
     elif action == 'compile_assets':
         print "= Compilation des ressources ="
-        from assets_manager import compile
+        from app.assets_manager import compile
         compile(**assets_conf_compile)
 
     else:
         print "Action invalide"
     
 else:
-    import server
+    from app import server
     print "= Lancement du serveur ="
     if options.debug:
         print "- Mode Débug -"
-        from assets_manager import watch
+        from app.assets_manager import watch
         watch(**assets_conf_watch)
     server.run(options.debug)
