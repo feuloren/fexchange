@@ -2,11 +2,11 @@
 # -*- coding:utf-8 -*-
 
 from os import urandom
-from hashlib import sha256, md5
+from hashlib import md5
 import os.path
+from re import search
 
-modele = """
-#!/usr/bin/env python
+modele = """#!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
 settings_model_hash = "{hash}"
@@ -16,6 +16,9 @@ def up_to_date():
     return settings_model_hash == md5(content).hexdigest()
 
 """
+
+def calculate_hash():
+    return md5(open('settings_dist.py', 'r').read()).hexdigest()
 
 def ask(message, default=None):
     """Demande une valeur à l'utilisateur
@@ -70,8 +73,7 @@ def interactive_config():
     with open('settings.py', 'w') as settings:
         # On sauvegarde le hash md5 du fichier de config des paramètres
         # puis les paramètres
-        hash = md5(open('settings_dist.py', 'r').read()).hexdigest()
-        settings.write(modele.format(hash=hash))
+        settings.write(modele.format(hash=calculate_hash()))
         settings.write(params)
 
 
@@ -87,6 +89,10 @@ def update():
         value = get_value(param)
         params += '{name} = "{value}"\n'.format(name=param['name'],
                                                 value=value)
-
-    with open('settings.py', 'a') as settings_f:
+    
+    content = open('settings.py', 'r').read()
+    old_hash = search(r'settings_model_hash = "(.+)"', content).group(1)
+    content = content.replace(old_hash, calculate_hash())
+    with open('settings.py', 'w') as settings_f:
+        settings_f.write(content)
         settings_f.write(params)
