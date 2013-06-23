@@ -9,7 +9,8 @@
   position : fixed;
   top : 0px;
   box-shadow: 0 0 5px rgba( 0, 0, 0, 0.5);
-  background-color: lighten($base-color, 10%);
+  background-color: $base-clair;
+  @include linear-gradient($base-clair,$base-sombre)
     img {
     margin: 3px;
     border: 2px solid black;
@@ -47,10 +48,11 @@
 }
 #corp {
     height: 1000px;
-    margin-top : 40px;
+    margin-top : 30px;
     width : 980px;
-    margin : auto;
-    padding: 15px 30px 15px 30px;
-    background-color: darken($base-color, 5%);
+    margin-left : auto;
+    margin-right : auto;
+    padding: 25px 30px 15px 30px;
+    background-color: $base-sombre;
 }
 
