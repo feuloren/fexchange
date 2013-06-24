@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from models import *
+from ..models import *
 from wtforms.fields import PasswordField
 from .base import BaseForm
 from hashlib import sha512

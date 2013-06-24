@@ -1,5 +1,6 @@
 settings.py
 virtualenv/
+static/styles/
 
 *.py[cod]
 

@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from .base import BaseHandler
-from models import Offre, Utilisateur
+from ..models import Offre, Utilisateur
 
 class RechercheHandler(BaseHandler):
     def get(self, term):

@@ -1,8 +1,8 @@
 # -*- coding:utf-8 -*-
 
 from .base import BaseHandler
-from models import Vente, Utilisateur, Categorie
-import forms
+from ..models import Vente, Utilisateur, Categorie
+from .. import forms
 from datetime import datetime
 
 class NewVenteHandler(BaseHandler):

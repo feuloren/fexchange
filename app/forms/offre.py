@@ -1,8 +1,7 @@
 # -*- coding:utf-8 -*-
 
-from models import *
+from ..models import *
 from .base import BaseForm
-from wtforms_alchemy import ModelFormField
 from wtforms.fields import IntegerField, SelectField
 
 class OffreForm(BaseForm):

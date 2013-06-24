@@ -1,8 +1,0 @@
-@mixin linear-gradient ($begin, $end) {
-
- background: -webkit-linear-gradient($begin, $end); 
- background: -moz-linear-gradient($begin, $end); 
- background: -ms-linear-gradient($begin, $end); 
- background: -o-linear-gradient($begin, $end); 
- background: linear-gradient($begin, $end);
-}

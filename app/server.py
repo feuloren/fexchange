@@ -11,11 +11,11 @@ from tornado.options import define, options
 from tornado.web import URLSpec as Spec
 
 from sqlalchemy.orm import scoped_session, sessionmaker
-from models import *  # import the engine to bind
+from .models import *  # import the engine to bind
 
-import settings as app_settings
+from . import settings as app_settings
 from handlers import *
-import modules as uimodules
+from . import modules as uimodules
 
 where_am_i = os.path.dirname(__file__)
 
@@ -35,8 +35,8 @@ class Application(tornado.web.Application):
         settings = {
             "titre": u"Adopte un meuble",
             'cookie_secret': app_settings.cookie_secret,
-            "template_path": os.path.join(where_am_i, "templates"),
-            "static_path": os.path.join(where_am_i, "static"),
+            "template_path": os.path.join(where_am_i, "..", "templates"),
+            "static_path": os.path.join(where_am_i, "..", "static"),
             "debug": debug,
             "static_url": app_settings.static_url,
             "ui_modules": uimodules,
