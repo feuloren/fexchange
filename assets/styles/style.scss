@@ -10,7 +10,7 @@
   top : 0px;
   box-shadow: 0 0 5px rgba( 0, 0, 0, 0.5);
   background-color: $base-clair;
-  @include linear-gradient($base-clair,$base-sombre)
+  @include linear-gradient($base-clair,$base-sombre);
     img {
     margin: 3px;
     border: 2px solid black;
