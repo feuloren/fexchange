@@ -6,7 +6,7 @@ Pour revendre, donner, prêter et trouver des meubles à Compiègne.
 Dépendances
 -----------
 
-Python2, Tornado, SqlAlchemy, Mysql, WTForms, pyScss
+Python2, Tornado, SqlAlchemy et Alembic, Mysql, WTForms, pyScss
 
 Installation
 ------------
@@ -51,3 +51,21 @@ Voici les actions disponibles pour le moment
 L'option -d ou --debug passe l'application en mode debug :
  * Le serveur est relancé si un fichier python est modifié
  * Les fichiers scss sont recompilés quand ils sont modifiés
+
+Migrations
+----------
+
+Les migrations de la base de données sont gérées grâce à Alembic,
+
+Pour migrer la base vers la dernière vesion
+```
+alembic upgrade head
+```
+
+Pour créer une migration le mode automatique suffit généralement
+```
+alembic revision --autogenerate -m 'Nom de la révision'
+```
+Cette commande compare la base de données actuelle avec les modèles définis dans app/models.py
+Elle crée un fichier de migration dans migrations/versions, il convient de vérifier ce fichier après qu'il ait été généré.
+Finalement il suffit de faire la migration, puis ajouter le fichier de migration à git pour que les autres développeurs ou utilisateurs puissent migrer leur base.
