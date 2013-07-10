@@ -65,6 +65,11 @@ if options.action:
         from app.assets_manager import compile
         compile(**assets_conf_compile)
 
+    elif action == 'migrate_db':
+        print "= Migration de la base ="
+        import subprocess
+        subprocess.call(['alembic', 'upgrade', 'head'])
+
     else:
         print "Action invalide"
     

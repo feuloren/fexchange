@@ -47,6 +47,7 @@ Voici les actions disponibles pour le moment
  * create_tables : Crée les tables à partir des modèles
  * drop_tables : Supprime les tables de la base
  * compile_assets : Compile les fichiers scss
+ * migrate_db : Exécute toutes les migrations non-effectuées
 
 L'option -d ou --debug passe l'application en mode debug :
  * Le serveur est relancé si un fichier python est modifié
