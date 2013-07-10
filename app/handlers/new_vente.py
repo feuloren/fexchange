@@ -6,6 +6,8 @@ from .. import forms
 from datetime import datetime
 
 class NewVenteHandler(BaseHandler):
+    titre_ = 'Vendre un meuble'
+
     def get_categories(self):
         return [(c.id, c.nom) for c in self.db.query(Categorie).all()]
 

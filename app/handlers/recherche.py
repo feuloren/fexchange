@@ -4,6 +4,7 @@ from .base import BaseHandler
 from ..models import Offre, Utilisateur
 
 class RechercheHandler(BaseHandler):
+    titre_ = 'Rechercher un meuble'
     def get(self, term):
         if term is None:
             results = None

@@ -24,6 +24,19 @@ class BaseHandler(tornado.web.RequestHandler):
         return self.application.settings["static_url"] + filename
 
     @property
+    def titre(self):
+        self.require_setting("titre")
+
+        if hasattr(self, 'titre_'):
+            return '%s - %s' % (self.titre_, self.settings['titre'])
+        else:
+            return self.settings['titre']
+
+    @titre.setter
+    def titre(self, val):
+        self.titre_ = val
+
+    @property
     def service_url(self):
         self.require_setting('service_url')
         return self.settings['service_url']
