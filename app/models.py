@@ -45,7 +45,7 @@ class Offre(Base):
     id = Column(Integer, primary_key=True)
     vendeur_id = Column(Integer, ForeignKey('utilisateurs.id'), nullable=False)
     vendeur = relationship("Utilisateur")
-    type = Column(Enum('pret', 'don', 'vente', 'achat'), nullable=False)
+    type = Column(Enum('pret', 'don', 'vente'), nullable=False)
     nom = Column(String(20), nullable=False)
     categorie_id = Column(Integer, ForeignKey('categories.id'), nullable=False)
     categorie = relationship("Categorie")
@@ -111,6 +111,50 @@ class Photo(Base):
     date_upload = Column(DateTime, nullable=True)
 
 photos_table = Photo.__table__
+
+class Message(Base):
+    __tablename__ = 'messages'
+    id = Column(Integer, primary_key=True)
+    de = Column(Integer, ForeignKey('utilisateurs.id'), nullable=False)
+    pour = Column(Integer, ForeignKey('utilisateurs.id'), nullable=False)
+    offre = Column(Integer, ForeignKey('offres.id'))
+    proposition = Column(Integer, ForeignKey('propositions.id'))
+    contenu = Column(Text, nullable=False)
+    date_envoi = Column(DateTime, nullable=False)
+    date_lecture = Column(DateTime)
+
+class Proposition(Base):
+    __tablename__ = 'propositions'
+    id = Column(Integer, primary_key=True)
+    type = Column(Enum('pret', 'don', 'vente'), nullable=False)
+    utilisateur = Column(Integer, ForeignKey('utilisateurs.id'), nullable=False)
+    date_proposition = Column(DateTime, nullable=False)
+    date_accepte = Column(DateTime)
+    date_refuse = Column(DateTime)
+
+    __mapper_args__ = {
+        'polymorphic_identity':'propositions',
+        'polymorphic_on':type
+        }
+
+class PropositionAchat(Proposition):
+    __tablename__ = 'achats'
+    id = Column(Integer, ForeignKey('propositions.id'), primary_key=True)
+    prix = Column(Numeric(6, 2), nullable=True)
+
+    __mapper_args__ = {
+        'polymorphic_identity':'vente',
+        }
+
+class PropositionPret(Proposition):
+    __tablename__ = 'pprets'
+    id = Column(Integer, ForeignKey('propositions.id'), primary_key=True)
+    date_retour = Column(Date)
+    duree = Column(Integer)
+
+    __mapper_args__ = {
+        'polymorphic_identity':'pret',
+        }
 
 metadata = Base.metadata
 
