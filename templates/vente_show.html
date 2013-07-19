@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="detail-offre">
+<h1>{{ vente.nom }}</h1>
+<p>{% module Markdown(vente.description) %}</p>
+<p>Prix : {{ vente.prix }} €</p>
+<p>Vendeur : {{ vente.vendeur.nom_complet }}</p>
+{% if vente.date_annule %}
+<p>Vente annulée</p>
+{% elif vente.date_conclusion %}
+<p>Vente terminée</p>
+{% end %}
+</div>
+<div class="messages">
+<a href="#">Proposition d'achat</a>
+<a href="#">Message</a>
+{% for message in vente.messages %}
+<div class="message">
+  
+</div>
+{% end %}
+</div>
+{% end %}

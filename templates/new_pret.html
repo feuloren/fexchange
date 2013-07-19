@@ -1,15 +1,17 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<h1>Enregister une vente</h1>
+<h1>Enregister un prêt</h1>
 
-<form class="form-horizontal" method="POST" action="{{ reverse_url('nouvelle_vente') }}">
+<form class="form-horizontal" method="POST" action="{{ reverse_url('nouveau_pret') }}">
   {% module FormField(form.nom) %}
   {% module FormField(form.categorie_id) %}
-  {% module FormField(form.prix) %}
   {% module FormField(form.description) %}
   {% module FormField(form.date_achat) %}
   {% module FormField(form.date_disponibilite) %}
+  {% module FormField(form.date_retour) %}
+  Ou
+  {% module FormField(form.duree) %}
   {% module FormField(form.etat) %}
   <input type="submit" value="Enregistrer" />
 </form>

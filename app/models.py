@@ -58,6 +58,8 @@ class Offre(Base):
     date_disponibilite = Column(Date, nullable=False)
     etat = Column(Enum(u'Neuf', u'Comme neuf', u'Bon état', u'Usé', u'Dégradé'), nullable=False)
 
+    messages = relationship("Message", order_by="Message.date_envoi")
+
     __mapper_args__ = {
         'polymorphic_identity':'offres',
         'polymorphic_on':type
@@ -83,7 +85,7 @@ class Pret(Offre):
     __tablename__ = 'prets'
     id = Column(Integer, ForeignKey('offres.id'), primary_key=True)
     date_retour = Column(Date)
-    duree = Column(Integer)
+    duree = Column(String(20))
 
     __mapper_args__ = {
         'polymorphic_identity':'pret',

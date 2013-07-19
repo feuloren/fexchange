@@ -24,7 +24,10 @@ class Application(tornado.web.Application):
         handlers = [
             Spec(r"/", HomeHandler),
             Spec(r"/recherche(?:/(.*))?", RechercheHandler),
-            Spec(r"/vente/new", NewVenteHandler, name='nouvelle_vente'),
+            Spec(r"/ajouter/vente", NewVenteHandler, name='nouvelle_vente'),
+            Spec(r"/ajouter/pret", NewPretHandler, name='nouveau_pret'),
+            Spec(r"/ajouter/don", NewDonHandler, name='nouveau_don'),
+            Spec(r"/vente/(\d+)", ShowVenteHandler, name='show_vente'),
             Spec(r"/auth", LoginHandler, name='login'),
             Spec(r"/auth/logout", LogoutHandler, name='logout'),
             Spec(r"/auth/cas", CasHandler, name='cas_auth'),
