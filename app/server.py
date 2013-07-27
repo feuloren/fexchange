@@ -8,33 +8,18 @@ import tornado.ioloop
 import tornado.web
 import tornado.httpclient
 from tornado.options import define, options
-from tornado.web import URLSpec as Spec
 
 from sqlalchemy.orm import scoped_session, sessionmaker
 from .models import *  # import the engine to bind
 
 from . import settings as app_settings
-from handlers import *
 from . import modules as uimodules
+from .routing import routes
 
 where_am_i = os.path.dirname(__file__)
 
 class Application(tornado.web.Application):
     def __init__(self, debug):
-        handlers = [
-            Spec(r"/", HomeHandler),
-            Spec(r"/recherche(?:/(.*))?", RechercheHandler),
-            Spec(r"/ajouter/vente", NewVenteHandler, name='nouvelle_vente'),
-            Spec(r"/ajouter/pret", NewPretHandler, name='nouveau_pret'),
-            Spec(r"/ajouter/don", NewDonHandler, name='nouveau_don'),
-            Spec(r"/vente/(\d+)", ShowVenteHandler, name='show_vente'),
-            Spec(r"/auth", LoginHandler, name='login'),
-            Spec(r"/auth/logout", LogoutHandler, name='logout'),
-            Spec(r"/auth/cas", CasHandler, name='cas_auth'),
-            Spec(r"/auth/cas/register", CasRegisterHandler, name='cas_register'),
-            Spec(r"/auth/classic", PasswordAuthHandler),
-            Spec(r"/auth/register", RegisterHandler, name='register'),
-            ]
         settings = {
             "titre": u"Adopte un meuble",
             'cookie_secret': app_settings.cookie_secret,
@@ -47,7 +32,7 @@ class Application(tornado.web.Application):
             "cas_url": app_settings.cas_url,
             "login_url":"/auth",
             }
-        tornado.web.Application.__init__(self, handlers, **settings)
+        tornado.web.Application.__init__(self, routes, **settings)
         # Have one global connection.
         self.db = scoped_session(sessionmaker(bind=engine))
 
