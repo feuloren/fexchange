@@ -18,9 +18,7 @@ class PasswordAuthHandler(BaseHandler):
         else:
             user = self.db.query(Utilisateur).filter_by(email=email, mdp=password_hash).first()
             if user:
-                self.set_secure_cookie('user', str(user.id))
-                self.set_secure_cookie('auth', 'classic')
-                self.redirect("/")
+                self.set_logged_user(user, 'classic')
             else:
                 self.render('password_auth.html', error='Email ou mot de passe incorrect')
 

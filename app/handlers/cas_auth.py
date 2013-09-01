@@ -24,9 +24,7 @@ class CasHandler(BaseHandler):
                     login = data.group(1)
                     user = self.db.query(Utilisateur).filter_by(login=login).first()
                     if user:
-                        self.set_secure_cookie('user', str(user.id))
-                        self.set_secure_cookie('auth', 'cas')
-                        self.redirect("/")
+                        self.set_logged_user(user, 'cas')
                     else:
                         self.set_secure_cookie('register_cas_user', login)
                         self.redirect("/auth/cas/register")

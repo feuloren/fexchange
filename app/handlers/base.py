@@ -46,6 +46,12 @@ class BaseHandler(tornado.web.RequestHandler):
         self.require_setting('cas_url')
         return self.settings['cas_url']
 
+    def set_logged_user(self, user, method):
+        self.set_secure_cookie('user', str(user.id))
+        self.set_secure_cookie('auth', method)
+        url = self.get_cookie('auth_target_url', '/')
+        self.redirect(url)
+
     # Generate CAS URLs
     def cas_login(self):
         return self.cas_url + "/login?service=" + self.service_url + self.reverse_url('cas_auth')
@@ -55,3 +61,4 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def cas_logout(self):
         return self.cas_url + "/logout?url=" + self.service_url
+

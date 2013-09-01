@@ -5,6 +5,11 @@ from .base import BaseHandler
 
 class LoginHandler(BaseHandler):
     def get(self):
+        # on récupère l'url qui a demandé l'authentification
+        # TODO : regarder le aussi referer si on a pas de next
+
+        url = self.get_argument('next', '/')
+        self.set_cookie('auth_target_url', url)
         self.render('auth.html')
 
 class LogoutHandler(BaseHandler):
