@@ -1,4 +1,4 @@
 <div>
-  <strong>{{ offre.nom }}</strong> dans {{ offre.categorie.nom }} par {{ offre.vendeur.nom_complet }}<br/>
+  <a href="{{ reverse_url('show_offre', offre.id) }}">{{ offre.nom }}</a> dans {{ offre.categorie.nom }} par {{ offre.vendeur.nom_complet }}<br/>
   {% module Markdown(offre.description) %}
 <div>
