@@ -4,7 +4,9 @@
 <div class="detail-offre">
 <h1>{{ vente.nom }} <a href="#">Edit</a></h1>
 <p>{% module Markdown(vente.description) %}</p>
+{% if vente.type == 'vente' %}
 <p>Prix : {{ vente.prix }} €</p>
+{% end %}
 <p>Vendeur : {{ vente.vendeur.nom_complet }}</p>
 {% if vente.date_annule %}
 <p>Vente annulée</p>
