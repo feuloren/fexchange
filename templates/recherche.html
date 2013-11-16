@@ -6,10 +6,7 @@
   {% if results %}
   {{ results.count() }} résultats<br/><br/>
     {% for result in results %}
-      <div>
-      <strong>{{ result.nom }}</strong> dans {{ result.categorie.nom }} par {{ result.vendeur.nom_complet }}<br/>
-      {% module Markdown(result.description) %}
-      <div>
+      {% module OffreItemLarge(result) %}
     {% end %}
   {% else %}
     Aucun résultat

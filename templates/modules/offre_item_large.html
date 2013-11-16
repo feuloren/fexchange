@@ -1,0 +1,4 @@
+<div>
+  <strong>{{ offre.nom }}</strong> dans {{ offre.categorie.nom }} par {{ offre.vendeur.nom_complet }}<br/>
+  {% module Markdown(offre.description) %}
+<div>
