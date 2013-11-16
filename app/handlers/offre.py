@@ -5,14 +5,14 @@ from .base import BaseHandler
 from ..models import *
 from .. import forms
 
-class ShowVenteHandler(BaseHandler):
+class ShowOffreHandler(BaseHandler):
     titre_ = 'Vente'
 
     def get_categories(self):
         return [(c.id, c.nom) for c in self.db.query(Categorie).all()]
 
     def get(self, id):
-        vente = self.db.query(Vente).get(int(id))
+        vente = self.db.query(Offre).get(int(id))
         if vente is None:
             self.render("obj_not_found.html")
         else:

@@ -2,4 +2,37 @@
 
 {% block body %}
 <h1>Bienvenue !</h1>
+<div>
+<form method="get" action="{{ reverse_url('recherche') }}">
+Recherche <input type="text" name="q"/>
+<input type="checkbox" checked="checked" name="prets" id="accept-prets"/> <label for="accept-prets">Prêts</label>
+<input type="checkbox" checked="checked" name="dons" id="accept-dons"/> <label for="accept-dons">Dons</label>
+<input type="checkbox" checked="checked" name="ventes" id="accept-ventes"/> <label for="accept-ventes">Ventes</label>
+</form>
+</div>
+
+<div>
+<a href="{{ reverse_url('nouvelle_vente') }}">Ajouter une Vente</a>
+<a href="{{ reverse_url('nouveau_don') }}">Ajouter un Don</a>
+<a href="{{ reverse_url('nouveau_pret') }}">Ajouter un Prêt</a>
+</div>
+
+<div id="">
+<ul>
+<li class="header">Articles disponibles rapidement</li>
+</ul>
+</div>
+
+<div id="latest">
+<ul>
+<li class="header">Les derniers articles proposés</li>
+{% for offre in latest %}
+{% module OffreItem(offre) %}
+{%end%}
+</ul>
+</div>
+
+<div id="advert">
+pub
+</div>
 {% end %}

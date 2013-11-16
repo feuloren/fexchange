@@ -3,6 +3,10 @@
 from tornado.web import UIModule
 import markdown
 
+class OffreItem(UIModule):
+    def render(self, offre):
+        return self.render_string('modules/offre_item.html', offre=offre)
+
 class FormField(UIModule):
     def render(self, field, **kwargs):
         # note : on peut vérifier si le champ est requis avec field.flags.required

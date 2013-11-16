@@ -5,7 +5,11 @@ from ..models import Offre, Utilisateur
 
 class RechercheHandler(BaseHandler):
     titre_ = 'Rechercher un meuble'
-    def get(self, term):
+    def get(self):
+        term = self.get_argument('q', None)
+        ventes = self.get_argument('accept-ventes', True)
+        dons = self.get_argument('accept-dons', True)
+        prets = self.get_argument('accept-prets', True)
         if term is None:
             results = None
         else:
