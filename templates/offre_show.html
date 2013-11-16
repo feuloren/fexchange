@@ -4,8 +4,12 @@
 <div class="detail-offre">
 <h1>{{ offre.nom }}</h1>
 <p>{% module Markdown(offre.description) %}</p>
-{% if offre.type == 'offre' %}
+{% if offre.type == 'vente' %}
 <p>Prix : {{ offre.prix }} €</p>
+{% elif offre.type == 'don' %}
+<p>Gratuit</p>
+{% elif offre.type == 'pret' %}
+<p>Prêt</p>
 {% end %}
 <p>Vendeur : {{ offre.vendeur.nom_complet }}</p>
 {% if offre.date_annule %}
