@@ -4,7 +4,8 @@ import re
 import tornado.web
 from .base import BaseHandler
 from ..models import Utilisateur
-from ..forms import CasForm, MultiDict, hash_user_password
+from ..forms import CasForm, MultiDict
+from .password import encrypt
 from random import choice
 import string
 
@@ -56,7 +57,7 @@ class CasRegisterHandler(BaseHandler):
             user = Utilisateur()
             form.populate_obj(user)
             user.login = login
-            user.mdp = hash_user_password(''.join(choice(chars) for _ in range(length)))
+            user.mdp = encrypt(''.join(choice(chars) for _ in range(length)))
             self.db.add(user)
             self.db.commit()
 

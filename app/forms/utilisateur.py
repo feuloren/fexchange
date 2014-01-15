@@ -3,18 +3,14 @@
 from ..models import *
 from wtforms.fields import PasswordField
 from .base import BaseForm
-from hashlib import sha512
-
-def hash_user_password(mdp):
-    if mdp:
-        return sha512(mdp).hexdigest()
+from ..handlers.password import encrypt
 
 class CasForm(BaseForm):
     class Meta:
         model = Utilisateur
 
     mdp = PasswordField(u'Mot de Passe',
-                        filters = [hash_user_password,])
+                        filters = [lambda p : None if p is None else encrypt(p),])
 
     def customize(self):
         self.set_label('nom', u'Nom')
