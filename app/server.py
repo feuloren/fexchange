@@ -2,6 +2,8 @@
 # -*- coding:utf-8 -*-
 
 import os.path
+from .logger import logger_factory
+logger = logger_factory()
 
 import tornado.httpserver
 import tornado.ioloop
@@ -37,8 +39,10 @@ class Application(tornado.web.Application):
         self.db = scoped_session(sessionmaker(bind=engine))
 
 def run(debug=False, port=8080):
+    logger.info('Setting up the application')
     http_server = tornado.httpserver.HTTPServer(Application(debug))
     http_server.listen(int(app_settings.port))
+    logger.info('Launching')
     tornado.ioloop.IOLoop.instance().start()
 
 if __name__ == "__main__":
