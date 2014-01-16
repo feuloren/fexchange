@@ -21,6 +21,6 @@ class ShowOffreHandler(BaseHandler):
                     self.render("offre_manage.html", offre=offre)
                 else:
                     # messages = offre.message.filter((de = self.user and pour = offre.vendeur) or (de = offre.vendeur and to=self.user)).order_by(date_envoi)
-                    self.rendeur("offre_show.html", offre=offre, messages=offre.message)
+                    self.render("offre_show.html", offre=offre, messages=offre.messages)
             else:
                 self.render("offre_show.html", offre=offre)
