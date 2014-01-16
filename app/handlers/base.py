@@ -4,9 +4,10 @@ import tornado.web
 from ..models import Utilisateur
 
 class BaseHandler(tornado.web.RequestHandler):
-    @property
-    def db(self):
-        return self.application.db
+    def __init__(self, application, request, **kwargs):
+        super(BaseHandler, self).__init__(application, request, **kwargs)
+
+        self.db = self.application.db()
 
     def get_current_user(self):
         user_id = self.get_secure_cookie("user")

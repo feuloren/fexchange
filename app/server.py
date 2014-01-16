@@ -11,7 +11,7 @@ import tornado.web
 import tornado.httpclient
 from tornado.options import define, options
 
-from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.orm import sessionmaker
 from .models import *  # import the engine to bind
 
 from . import settings as app_settings
@@ -36,7 +36,7 @@ class Application(tornado.web.Application):
             }
         tornado.web.Application.__init__(self, routes, **settings)
         # Have one global connection.
-        self.db = scoped_session(sessionmaker(bind=engine))
+        self.db = sessionmaker(bind=engine)
 
 def run(debug=False, port=8080):
     logger.info('Setting up the application')
