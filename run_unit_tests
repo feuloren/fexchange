@@ -1,0 +1,4 @@
+#!/bin/sh
+
+. activate
+python -m pytest app/unit_tests/
