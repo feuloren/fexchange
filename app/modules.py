@@ -23,3 +23,11 @@ class Markdown(UIModule):
 
     def render(self, text):
         return self.parser.convert(text)
+
+class Message(UIModule):
+    def render(self, message):
+        return self.render_string('modules/message.html', message=message)
+
+class Date(UIModule):
+    def render(self, date):
+        return date.strftime("%d/%m/%Y %H:%M")

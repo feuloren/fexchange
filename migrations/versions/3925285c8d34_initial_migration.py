@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 """Initial migration
 
 Revision ID: 3925285c8d34
@@ -42,7 +44,7 @@ def upgrade():
     sa.Column('date_annule', sa.DateTime(), nullable=True),
     sa.Column('date_achat', sa.Date(), nullable=True),
     sa.Column('date_disponibilite', sa.Date(), nullable=False),
-    sa.Column('etat', sa.Enum(u'Neuf', u'Comme neuf', u'Bon \xe9tat', u'Us\xe9', u'D\xe9grad\xe9'), nullable=False),
+    sa.Column('etat', sa.Enum(u'neuf', u'comme neuf', u'bon', u'use', u'degrade'), nullable=False),
     sa.ForeignKeyConstraint(['categorie_id'], ['categories.id'], ),
     sa.ForeignKeyConstraint(['vendeur_id'], ['utilisateurs.id'], ),
     sa.PrimaryKeyConstraint('id')

@@ -21,10 +21,8 @@
 <div class="messages">
 <a href="#">Proposition d'achat</a>
 <a href="#">Message</a>
-{% for message in offre.messages %}
-<div class="message">
-  
-</div>
+{% for message in messages %}
+{% module Message(message) %}
 {% end %}
 </div>
 {% end %}

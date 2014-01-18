@@ -5,6 +5,8 @@ from .base import BaseHandler
 from ..models import *
 from .. import forms
 
+from sqlalchemy import and_
+
 class ShowOffreHandler(BaseHandler):
     titre_ = 'Offre'
 
@@ -20,7 +22,10 @@ class ShowOffreHandler(BaseHandler):
                 if self.current_user is offre.vendeur:
                     self.render("offre_manage.html", offre=offre)
                 else:
-                    # messages = offre.message.filter((de = self.user and pour = offre.vendeur) or (de = offre.vendeur and to=self.user)).order_by(date_envoi)
-                    self.render("offre_show.html", offre=offre, messages=offre.messages)
+                    # On récupère les messages échangés pour l'offre actuelle
+                    # Entre le vendeur et l'utilisateur connecté
+                    users = [self.current_user.id, offre.vendeur.id]
+                    messages = self.db.query(Message).filter(and_(Message.offre_id == offre.id, Message.destinataire_id.in_(users), Message.emetteur_id.in_(users)))
+                    self.render("offre_show.html", offre=offre, messages=messages)
             else:
-                self.render("offre_show.html", offre=offre)
+                self.render("offre_show.html", offre=offre, messages=[])

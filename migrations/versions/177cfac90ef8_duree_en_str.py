@@ -20,4 +20,4 @@ def upgrade():
 
 def downgrade():
     op.drop_column('prets', 'duree')
-    op.add_column('prets', sa.Column('duree', sa.Integer), nullable=True)
+    op.add_column('prets', sa.Column('duree', sa.Integer, nullable=True))

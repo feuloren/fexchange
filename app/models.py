@@ -56,9 +56,7 @@ class Offre(Base):
 
     date_achat = Column(Date)
     date_disponibilite = Column(Date, nullable=False)
-    etat = Column(Enum(u'Neuf', u'Comme neuf', u'Bon état', u'Usé', u'Dégradé'), nullable=False)
-
-    messages = relationship("Message", order_by="Message.date_envoi")
+    etat = Column(Enum(u'neuf', u'comme neuf', u'bon', u'use', u'degrade'), nullable=False)
 
     __mapper_args__ = {
         'polymorphic_identity':'offres',
@@ -117,19 +115,24 @@ photos_table = Photo.__table__
 class Message(Base):
     __tablename__ = 'messages'
     id = Column(Integer, primary_key=True)
-    de = Column(Integer, ForeignKey('utilisateurs.id'), nullable=False)
-    pour = Column(Integer, ForeignKey('utilisateurs.id'), nullable=False)
-    offre = Column(Integer, ForeignKey('offres.id'))
+    emetteur_id = Column(Integer, ForeignKey('utilisateurs.id'), nullable=False)
+    destinataire_id = Column(Integer, ForeignKey('utilisateurs.id'), nullable=False)
+    offre_id = Column(Integer, ForeignKey('offres.id'))
     proposition = Column(Integer, ForeignKey('propositions.id'))
     contenu = Column(Text, nullable=False)
     date_envoi = Column(DateTime, nullable=False)
     date_lecture = Column(DateTime)
 
+    emetteur = relationship("Utilisateur", foreign_keys=[emetteur_id])
+    destinataire = relationship("Utilisateur", foreign_keys=[destinataire_id])
+    offre = relationship("Offre", backref=backref('messages', order_by=date_envoi))
+
 class Proposition(Base):
     __tablename__ = 'propositions'
     id = Column(Integer, primary_key=True)
     type = Column(Enum('pret', 'don', 'vente'), nullable=False)
-    utilisateur = Column(Integer, ForeignKey('utilisateurs.id'), nullable=False)
+    utilisateur_id = Column(Integer, ForeignKey('utilisateurs.id'), nullable=False)
+    utilisateur = relationship("Utilisateur", backref=backref('propositions'))
     date_proposition = Column(DateTime, nullable=False)
     date_accepte = Column(DateTime)
     date_refuse = Column(DateTime)

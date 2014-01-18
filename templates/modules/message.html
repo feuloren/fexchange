@@ -1,0 +1,7 @@
+<div class="message">
+De {{ message.emetteur.nom_complet }} le {% module Date(message.date_envoi) %}
+{% if not(message.date_lecture is None) %} - Lu {% end %}
+<p class="contenu-message">
+{{ message.contenu }}
+</p>
+</div>

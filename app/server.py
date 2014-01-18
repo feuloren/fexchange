@@ -38,6 +38,13 @@ class Application(tornado.web.Application):
         # Have one global connection.
         self.db = sessionmaker(bind=engine)
 
+        # En débug on affiche les requêtes SQL sur stdout
+        if debug:
+            import logging
+            logging.basicConfig()
+            logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+
+
 def run(debug=False, port=8080):
     logger.info('Setting up the application')
     http_server = tornado.httpserver.HTTPServer(Application(debug))
