@@ -45,7 +45,7 @@ class Application(tornado.web.Application):
             logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 
 
-def run(debug=False, port=8080):
+def run(debug=False):
     logger.info('Setting up the application')
     http_server = tornado.httpserver.HTTPServer(Application(debug))
     http_server.listen(int(app_settings.port))
