@@ -18,6 +18,7 @@ class ShowOffreHandler(BaseHandler):
         if offre is None:
             self.render("obj_not_found.html")
         else:
+            self.titre = offre.nom
             if self.current_user:
                 if self.current_user is offre.vendeur:
                     self.render("offre_manage.html", offre=offre)

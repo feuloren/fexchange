@@ -8,7 +8,7 @@
   <!--[if IE]>
       <link href="{{ static_url('styles/ie.css') }}" media="screen, projection" rel="stylesheet" type="text/css" />
   <![endif]-->
-      <title>{{ escape(handler.settings["titre"]) }}</title>
+      <title>{{ escape(handler.titre) }}</title>
   </head>
   <body>
     <div id="topfixed">
@@ -17,9 +17,9 @@
         {{ handler.current_user.nom_complet }}
       </div>
       <img src="{{ static_url('images/haku.jpg') }}"/>
-      <a href="{{ reverse_url('logout') }}"> Déconnection </a>
+      <a href="{{ reverse_url('logout') }}"> Déconnexion </a>
       {% else %}
-      <a href="{{ reverse_url('login') }}"> Connection </a>
+      <a href="{{ reverse_url('login') }}"> Connexion </a>
       {% end %}
     </div>
     <div id="corp">

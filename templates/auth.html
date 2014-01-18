@@ -1,14 +1,14 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<h1>Connection au site</h1>
+<h1>Connexion au site</h1>
 <h2>Connexion par CAS</h2>
 <a href="{{ handler.cas_login() }}">Go</a><br/>
-<h2>Connection par mot de passe</h2>
+<h2>Connexion par mot de passe</h2>
 <form action="/auth/classic" method="POST">
   <label for="email-input">Email ou adresse mail</label><input type="text" name="email" id="email-input" /><br/>
   <label for="password-input">Mot de Passe</label><input type="password" name="password" id="password-input" /><br/>
-  <input type="submit" value="Connection"/>
+  <input type="submit" value="Connexion"/>
 </form>
 <h2>Créez un compte</h2>
 <a href="{{ reverse_url('register') }}">Go</a><br/>

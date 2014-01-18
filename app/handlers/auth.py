@@ -4,6 +4,8 @@ import tornado.web
 from .base import BaseHandler
 
 class LoginHandler(BaseHandler):
+    titre_ = "Connexion"
+
     def get(self):
         # on récupère l'url qui a demandé l'authentification
         # TODO : regarder le aussi referer si on a pas de next
