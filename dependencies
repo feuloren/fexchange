@@ -8,3 +8,5 @@ pyScss
 watchdog
 alembic
 passlib
+selenium
+pytest
